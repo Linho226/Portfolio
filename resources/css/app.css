@@ -1,0 +1,316 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════
+   VARIABLES — MODE CLAIR (défaut)
+═══════════════════════════════════════════════ */
+:root {
+	--adm-bg:           #f1f5f9;
+	--adm-sidebar-bg:   linear-gradient(180deg, #ffffff 0%, #f0f4ff 100%);
+	--adm-sidebar-border: #dbeafe;
+	--adm-sidebar-shadow: 0 0 40px rgba(30,41,59,.08);
+	--adm-topbar-bg:    linear-gradient(90deg, #ffffff 0%, #f0f4ff 100%);
+	--adm-topbar-border: #dbeafe;
+	--adm-card-bg:      #ffffff;
+	--adm-card-border:  #e2e8f0;
+	--adm-card-shadow:  0 4px 20px rgba(15,23,42,.06);
+	--adm-text:         #1e293b;
+	--adm-text-muted:   #64748b;
+	--adm-text-label:   #475569;
+	--adm-accent:       #2563eb;
+	--adm-accent2:      #1d4ed8;
+	--adm-active-bg:    linear-gradient(90deg, #2563eb 0%, #1d4ed8 100%);
+	--adm-active-color: #ffffff;
+	--adm-link-hover:   rgba(37,99,235,.08);
+	--adm-link-color:   #334155;
+	--adm-brand-bg:     linear-gradient(135deg, #2563eb 0%, #0f172a 100%);
+	--adm-input-bg:     #ffffff;
+	--adm-input-border: #cbd5e1;
+	--adm-input-focus:  #2563eb;
+	--adm-table-header: #f8fafc;
+	--adm-table-hover:  #f1f5f9;
+	--adm-badge-read:   #94a3b8;
+	--adm-divider:      #e2e8f0;
+	--adm-success-bg:   rgba(16,185,129,.08);
+	--adm-success-border: rgba(16,185,129,.3);
+	--adm-success-color: #065f46;
+}
+
+/* ═══════════════════════════════════════════════
+   VARIABLES — MODE SOMBRE (système)
+═══════════════════════════════════════════════ */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--adm-bg:           #080f1e;
+		--adm-sidebar-bg:   linear-gradient(180deg, #0c1628 0%, #0a1322 100%);
+		--adm-sidebar-border: rgba(59,130,246,.15);
+		--adm-sidebar-shadow: 0 0 40px rgba(0,0,0,.4);
+		--adm-topbar-bg:    linear-gradient(90deg, #0c1628 0%, #0a1322 100%);
+		--adm-topbar-border: rgba(59,130,246,.15);
+		--adm-card-bg:      #0d1a30;
+		--adm-card-border:  rgba(59,130,246,.12);
+		--adm-card-shadow:  0 4px 24px rgba(0,0,0,.35);
+		--adm-text:         #e2e8f0;
+		--adm-text-muted:   #94a3b8;
+		--adm-text-label:   #64748b;
+		--adm-accent:       #3b82f6;
+		--adm-accent2:      #2563eb;
+		--adm-active-bg:    linear-gradient(90deg, #1d4ed8 0%, #1e40af 100%);
+		--adm-active-color: #ffffff;
+		--adm-link-hover:   rgba(59,130,246,.12);
+		--adm-link-color:   #94a3b8;
+		--adm-brand-bg:     linear-gradient(135deg, #1d4ed8 0%, #0f172a 100%);
+		--adm-input-bg:     rgba(255,255,255,.04);
+		--adm-input-border: rgba(59,130,246,.2);
+		--adm-input-focus:  #3b82f6;
+		--adm-table-header: rgba(255,255,255,.03);
+		--adm-table-hover:  rgba(59,130,246,.06);
+		--adm-badge-read:   #475569;
+		--adm-divider:      rgba(59,130,246,.12);
+		--adm-success-bg:   rgba(16,185,129,.1);
+		--adm-success-border: rgba(16,185,129,.25);
+		--adm-success-color: #6ee7b7;
+	}
+}
+
+/* ═══════════════════════════════════════════════
+   BASE
+═══════════════════════════════════════════════ */
+body {
+	background: var(--adm-bg);
+	color: var(--adm-text);
+	min-height: 100vh;
+	font-family: 'Figtree', sans-serif;
+	transition: background .3s, color .3s;
+}
+
+.admin-shell { min-height: 100vh; }
+
+/* ═══════════════════════════════════════════════
+   TOPBAR MOBILE
+═══════════════════════════════════════════════ */
+.admin-mobile-topbar {
+	background: var(--adm-topbar-bg);
+	border-bottom: 1px solid var(--adm-topbar-border);
+	-webkit-backdrop-filter: blur(12px);
+	backdrop-filter: blur(12px);
+	z-index: 1030;
+}
+
+/* ═══════════════════════════════════════════════
+   SIDEBAR
+═══════════════════════════════════════════════ */
+.admin-sidebar {
+	position: fixed;
+	top: 0; left: 0;
+	width: 260px;
+	height: 100vh;
+	background: var(--adm-sidebar-bg);
+	border-right: 1px solid var(--adm-sidebar-border);
+	box-shadow: var(--adm-sidebar-shadow);
+	z-index: 1040;
+	overflow-y: auto;
+	scrollbar-width: thin;
+	scrollbar-color: var(--adm-sidebar-border) transparent;
+}
+
+/* Labels de groupe */
+.admin-sidebar .sidebar-group-label {
+	font-size: .65rem;
+	font-weight: 700;
+	letter-spacing: .14em;
+	text-transform: uppercase;
+	color: var(--adm-text-label);
+	padding: .5rem .75rem .25rem;
+	margin-top: .5rem;
+}
+
+/* Liens nav */
+.admin-sidebar .nav-link {
+	border-radius: 10px;
+	padding: .55rem .85rem;
+	font-size: .83rem;
+	font-weight: 500;
+	color: var(--adm-link-color);
+	transition: background .18s, color .18s;
+	margin-bottom: 1px;
+}
+.admin-sidebar .nav-link:hover {
+	background: var(--adm-link-hover);
+	color: var(--adm-accent);
+}
+.admin-sidebar .nav-link.active {
+	background: var(--adm-active-bg);
+	color: var(--adm-active-color);
+	font-weight: 600;
+}
+
+/* Brand mark */
+.admin-brand-mark {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px; height: 36px;
+	border-radius: 10px;
+	background: var(--adm-brand-bg);
+	color: #fff;
+	font-size: .82rem;
+	font-weight: 700;
+	flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════
+   CONTENU PRINCIPAL
+═══════════════════════════════════════════════ */
+.admin-content { padding-top: 0; }
+
+@media (min-width: 992px) {
+	.admin-content { margin-left: 260px; }
+}
+
+/* ═══════════════════════════════════════════════
+   CARDS
+═══════════════════════════════════════════════ */
+.admin-card {
+	background: var(--adm-card-bg) !important;
+	border: 1px solid var(--adm-card-border) !important;
+	border-radius: 14px;
+	box-shadow: var(--adm-card-shadow);
+	color: var(--adm-text);
+}
+
+/* ═══════════════════════════════════════════════
+   HEADER DE PAGE
+═══════════════════════════════════════════════ */
+.admin-page-header {
+	background: var(--adm-card-bg);
+	border: 1px solid var(--adm-card-border);
+	border-radius: 14px;
+	padding: 1rem 1.5rem;
+	box-shadow: var(--adm-card-shadow);
+}
+
+/* ═══════════════════════════════════════════════
+   FORMULAIRES
+═══════════════════════════════════════════════ */
+.form-control, .form-select {
+	background-color: var(--adm-input-bg) !important;
+	border-color: var(--adm-input-border) !important;
+	color: var(--adm-text) !important;
+	border-radius: 9px;
+	padding: .55rem .85rem;
+	transition: border-color .2s, box-shadow .2s;
+}
+.form-control:focus, .form-select:focus {
+	border-color: var(--adm-input-focus) !important;
+	box-shadow: 0 0 0 3px rgba(37,99,235,.15) !important;
+}
+.form-control::placeholder { color: var(--adm-text-muted) !important; opacity: .6; }
+.form-label { color: var(--adm-text); font-size: .8rem; font-weight: 600; margin-bottom: .35rem; }
+.form-check-label { color: var(--adm-text); font-size: .85rem; }
+.form-check-input { background-color: var(--adm-input-bg); border-color: var(--adm-input-border); }
+.form-check-input:checked { background-color: var(--adm-accent); border-color: var(--adm-accent); }
+
+/* ═══════════════════════════════════════════════
+   TABLEAUX
+═══════════════════════════════════════════════ */
+.table {
+	color: var(--adm-text);
+	border-color: var(--adm-divider);
+}
+.table-light, thead.table-light tr, .table > thead {
+	background-color: var(--adm-table-header) !important;
+	color: var(--adm-text-muted) !important;
+	border-color: var(--adm-divider) !important;
+}
+.table-light th { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.table > :not(caption) > * > * {
+	background-color: transparent !important;
+	border-color: var(--adm-divider);
+	color: var(--adm-text);
+}
+.table-hover > tbody > tr:hover > * {
+	background-color: var(--adm-table-hover) !important;
+}
+
+/* ═══════════════════════════════════════════════
+   BOUTONS
+═══════════════════════════════════════════════ */
+.btn-primary {
+	background: var(--adm-active-bg);
+	border: none;
+	border-radius: 9px;
+	font-weight: 600;
+	font-size: .83rem;
+}
+.btn-primary:hover { opacity: .88; transform: translateY(-1px); }
+.btn-outline-primary {
+	color: var(--adm-accent);
+	border-color: var(--adm-accent);
+	border-radius: 9px;
+	font-size: .83rem;
+}
+.btn-outline-primary:hover { background: var(--adm-accent); color: #fff; }
+.btn-outline-secondary {
+	color: var(--adm-text-muted);
+	border-color: var(--adm-divider);
+	border-radius: 9px;
+	font-size: .83rem;
+}
+.btn-outline-secondary:hover { background: var(--adm-link-hover); color: var(--adm-text); border-color: var(--adm-input-border); }
+.btn-outline-danger { border-radius: 9px; font-size: .83rem; }
+.btn-sm { padding: .32rem .75rem; font-size: .78rem; }
+
+/* ═══════════════════════════════════════════════
+   BADGES
+═══════════════════════════════════════════════ */
+.badge { font-size: .68rem; font-weight: 600; padding: .28rem .65rem; border-radius: 999px; }
+
+/* ═══════════════════════════════════════════════
+   ALERTES / FLASH
+═══════════════════════════════════════════════ */
+.alert-success-adm {
+	background: var(--adm-success-bg);
+	border: 1px solid var(--adm-success-border);
+	color: var(--adm-success-color);
+	border-radius: 10px;
+	padding: .75rem 1rem;
+	font-size: .85rem;
+}
+
+/* ═══════════════════════════════════════════════
+   OFFCANVAS (mobile)
+═══════════════════════════════════════════════ */
+.offcanvas {
+	background: var(--adm-card-bg) !important;
+	color: var(--adm-text) !important;
+	border-color: var(--adm-card-border) !important;
+}
+.offcanvas .nav-link {
+	color: var(--adm-link-color);
+	border-radius: 10px;
+	padding: .55rem .85rem;
+	font-size: .83rem;
+	font-weight: 500;
+}
+.offcanvas .nav-link.active, .offcanvas .nav-link:hover { background: var(--adm-link-hover); color: var(--adm-accent); }
+.offcanvas .nav-link.active { background: var(--adm-active-bg); color: #fff; }
+.btn-close { filter: none; }
+@media (prefers-color-scheme: dark) {
+	.btn-close { filter: invert(1); }
+}
+
+/* ═══════════════════════════════════════════════
+   UTILITAIRES
+═══════════════════════════════════════════════ */
+.metric-value { font-size: 2rem; font-weight: 700; line-height: 1; color: var(--adm-text); }
+.section-title { color: var(--adm-text); font-weight: 700; letter-spacing: -.01em; }
+.text-muted { color: var(--adm-text-muted) !important; }
+.border-top { border-color: var(--adm-divider) !important; }
+.border-bottom { border-color: var(--adm-divider) !important; }
+hr { border-color: var(--adm-divider); opacity: 1; }
+a { color: var(--adm-accent); }
+small { color: var(--adm-text-muted); }
