@@ -8,14 +8,19 @@ FROM node:20-alpine AS assets
 
 WORKDIR /app
 
-# On copie d'abord les fichiers de dependances.
-# Docker pourra reutiliser cette couche tant que package.json/package-lock.json
-# ne changent pas, ce qui rend les futurs builds plus rapides.
-COPY package.json package-lock.json vite.config.js ./
+# On copie d'abord les fichiers de dependances et de configuration front-end.
+# postcss.config.js active Tailwind/Autoprefixer pendant le build.
+# tailwind.config.js indique a Tailwind quelles vues scanner pour generer
+# les classes CSS utilisees par le site.
+COPY package.json package-lock.json vite.config.js postcss.config.js tailwind.config.js ./
 RUN npm ci
 
 # Sources front-end utilisees par Vite/Tailwind/Bootstrap.
 COPY resources/ resources/
+
+# Tailwind doit voir les fichiers Blade pour conserver les classes utilisees.
+# Sans ces vues, le CSS produit dans Docker peut etre different du local.
+COPY resources/views/ resources/views/
 
 # Genere les fichiers minifies dans public/build.
 RUN npm run build
