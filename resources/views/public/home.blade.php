@@ -758,6 +758,32 @@
 /* Hamburger */
 .pf-hamburger { display:flex; flex-direction:column; justify-content:center; gap:5px; width:38px; height:38px; background:var(--pf-hover-bg); border:1px solid var(--pf-border); border-radius:9px; cursor:pointer; padding:0 9px; }
 .pf-hamburger span { display:block; height:1.5px; background:var(--pf-text); border-radius:999px; transition:all .3s; }
+@media (min-width: 992px) {
+    .pf-hamburger { display:none!important; }
+}
+
+/* Menu mobile public.
+   Ces regles protegent le menu si un style global ou un build CSS ecrase
+   les styles Bootstrap offcanvas. */
+#mobileMenu.offcanvas {
+    position:fixed;
+    top:0;
+    right:0;
+    bottom:0;
+    left:auto;
+    z-index:1045;
+    display:flex;
+    flex-direction:column;
+    width:300px;
+    max-width:85vw;
+    transform:translateX(100%);
+    visibility:hidden;
+    transition:transform .3s ease-in-out, visibility .3s ease-in-out;
+}
+#mobileMenu.offcanvas.show {
+    transform:none;
+    visibility:visible;
+}
 
 /* Menu mobile liens */
 .pf-mob-link { display:flex; align-items:center; gap:.75rem; padding:.85rem 1rem; border-radius:10px; color:var(--pf-text); text-decoration:none; font-size:.9rem; font-weight:500; transition:background .2s,color .2s; }

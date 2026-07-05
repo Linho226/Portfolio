@@ -125,31 +125,31 @@ $unreadCount = \App\Models\Contact::where('is_read', false)->count();
 
         <span class="sidebar-group-label">Général</span>
         <nav class="nav nav-pills flex-column gap-1 mb-3">
-            <a class="nav-link {{ nav_active(['admin.dashboard']) }}" href="{{ route('admin.dashboard') }}" data-bs-dismiss="offcanvas">📊 Tableau de bord</a>
-            <a class="nav-link {{ nav_active('admin.about.*') }}" href="{{ route('admin.about.edit') }}" data-bs-dismiss="offcanvas">👤 À propos</a>
-            <a class="nav-link {{ nav_active('admin.social.*') }}" href="{{ route('admin.social.edit') }}" data-bs-dismiss="offcanvas">🔗 Réseaux sociaux</a>
-            <a class="nav-link {{ nav_active('admin.settings.*') }}" href="{{ route('admin.settings.edit') }}" data-bs-dismiss="offcanvas">⚙️ Paramètres</a>
+            <a class="nav-link {{ nav_active(['admin.dashboard']) }}" href="{{ route('admin.dashboard') }}">📊 Tableau de bord</a>
+            <a class="nav-link {{ nav_active('admin.about.*') }}" href="{{ route('admin.about.edit') }}">👤 À propos</a>
+            <a class="nav-link {{ nav_active('admin.social.*') }}" href="{{ route('admin.social.edit') }}">🔗 Réseaux sociaux</a>
+            <a class="nav-link {{ nav_active('admin.settings.*') }}" href="{{ route('admin.settings.edit') }}">⚙️ Paramètres</a>
         </nav>
 
         <span class="sidebar-group-label">Contenu</span>
         <nav class="nav nav-pills flex-column gap-1 mb-3">
-            <a class="nav-link {{ nav_active(['admin.skills.*', 'admin.competences.*']) }}" href="{{ route('admin.competences.index') }}" data-bs-dismiss="offcanvas">🎯 Compétences</a>
-            <a class="nav-link {{ nav_active('admin.services.*') }}" href="{{ route('admin.services.index') }}" data-bs-dismiss="offcanvas">🛠️ Services</a>
-            <a class="nav-link {{ nav_active('admin.projects.*') }}" href="{{ route('admin.projects.index') }}" data-bs-dismiss="offcanvas">💼 Projets</a>
-            <a class="nav-link {{ nav_active('admin.technologies.*') }}" href="{{ route('admin.technologies.index') }}" data-bs-dismiss="offcanvas">💡 Technologies</a>
+            <a class="nav-link {{ nav_active(['admin.skills.*', 'admin.competences.*']) }}" href="{{ route('admin.competences.index') }}">🎯 Compétences</a>
+            <a class="nav-link {{ nav_active('admin.services.*') }}" href="{{ route('admin.services.index') }}">🛠️ Services</a>
+            <a class="nav-link {{ nav_active('admin.projects.*') }}" href="{{ route('admin.projects.index') }}">💼 Projets</a>
+            <a class="nav-link {{ nav_active('admin.technologies.*') }}" href="{{ route('admin.technologies.index') }}">💡 Technologies</a>
         </nav>
 
         <span class="sidebar-group-label">Parcours</span>
         <nav class="nav nav-pills flex-column gap-1 mb-3">
-            <a class="nav-link {{ nav_active('admin.experiences.*') }}" href="{{ route('admin.experiences.index') }}" data-bs-dismiss="offcanvas">📅 Expériences</a>
-            <a class="nav-link {{ nav_active('admin.educations.*') }}" href="{{ route('admin.educations.index') }}" data-bs-dismiss="offcanvas">🎓 Formations</a>
+            <a class="nav-link {{ nav_active('admin.experiences.*') }}" href="{{ route('admin.experiences.index') }}">📅 Expériences</a>
+            <a class="nav-link {{ nav_active('admin.educations.*') }}" href="{{ route('admin.educations.index') }}">🎓 Formations</a>
         </nav>
 
         <span class="sidebar-group-label">Communication</span>
         <nav class="nav nav-pills flex-column gap-1 mb-3">
-            <a class="nav-link {{ nav_active('admin.testimonials.*') }}" href="{{ route('admin.testimonials.index') }}" data-bs-dismiss="offcanvas">⭐ Témoignages</a>
-            <a class="nav-link {{ nav_active('admin.faqs.*') }}" href="{{ route('admin.faqs.index') }}" data-bs-dismiss="offcanvas">❓ FAQ</a>
-            <a class="nav-link {{ nav_active('admin.messages.*') }}" href="{{ route('admin.messages.index') }}" data-bs-dismiss="offcanvas">
+            <a class="nav-link {{ nav_active('admin.testimonials.*') }}" href="{{ route('admin.testimonials.index') }}">⭐ Témoignages</a>
+            <a class="nav-link {{ nav_active('admin.faqs.*') }}" href="{{ route('admin.faqs.index') }}">❓ FAQ</a>
+            <a class="nav-link {{ nav_active('admin.messages.*') }}" href="{{ route('admin.messages.index') }}">
                 ✉️ Messages
                 @if($unreadCount > 0)<span class="badge bg-danger ms-2">{{ $unreadCount }}</span>@endif
             </a>
@@ -166,4 +166,3 @@ $unreadCount = \App\Models\Contact::where('is_read', false)->count();
         </div>
     </div>
 </div>
-
