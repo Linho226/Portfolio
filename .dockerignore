@@ -1,0 +1,29 @@
+# Dossier Git inutile dans l'image Docker.
+.git
+.github
+
+# Ne jamais embarquer les variables locales/secretes dans l'image.
+# Sur Render, elles doivent etre configurees dans Environment Variables.
+.env
+.env.*
+!.env.example
+
+# Ces dossiers seront reinstalles/reconstruits dans Docker.
+node_modules
+vendor
+
+# Fichiers temporaires Laravel. Ils doivent etre recrees au demarrage.
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+bootstrap/cache/*
+
+# Logs de gestionnaires de paquets.
+npm-debug.log
+yarn-error.log
+
+# Fichiers utiles au depot, mais inutiles dans le contexte envoye a Docker.
+Dockerfile
+docker-compose.yml
+README.md
