@@ -62,6 +62,9 @@ $unreadCount = \App\Models\Contact::where('is_read', false)->count();
         <a class="nav-link {{ nav_active('admin.technologies.*') }}" href="{{ route('admin.technologies.index') }}">
             <span class="me-2">💡</span>Technologies
         </a>
+        <a class="nav-link {{ nav_active('admin.learning-resources.*') }}" href="{{ route('admin.learning-resources.index') }}">
+            <span class="me-2">📚</span>Ressources
+        </a>
     </nav>
 
     {{-- PARCOURS --}}
@@ -137,6 +140,7 @@ $unreadCount = \App\Models\Contact::where('is_read', false)->count();
             <a class="nav-link {{ nav_active('admin.services.*') }}" href="{{ route('admin.services.index') }}">🛠️ Services</a>
             <a class="nav-link {{ nav_active('admin.projects.*') }}" href="{{ route('admin.projects.index') }}">💼 Projets</a>
             <a class="nav-link {{ nav_active('admin.technologies.*') }}" href="{{ route('admin.technologies.index') }}">💡 Technologies</a>
+            <a class="nav-link {{ nav_active('admin.learning-resources.*') }}" href="{{ route('admin.learning-resources.index') }}">📚 Ressources</a>
         </nav>
 
         <span class="sidebar-group-label">Parcours</span>

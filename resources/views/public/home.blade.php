@@ -29,7 +29,7 @@
                 <a href="#skills"     class="pf-nav__link" data-section="skills">Competences</a>
                 <a href="#projects"   class="pf-nav__link" data-section="projects">Projets</a>
                 <a href="#experience" class="pf-nav__link" data-section="experience">Experience</a>
-                <a href="#blog"       class="pf-nav__link" data-section="blog">Blog</a>
+                <a href="#resources"  class="pf-nav__link" data-section="resources">Ressources</a>
                 <a href="#contact" class="pf-nav__cta ms-3">Contactez-moi</a>
             </nav>
 
@@ -58,7 +58,7 @@
             <a href="#skills"     class="pf-mob-link" data-bs-dismiss="offcanvas">Competences</a>
             <a href="#projects"   class="pf-mob-link" data-bs-dismiss="offcanvas">Projets</a>
             <a href="#experience" class="pf-mob-link" data-bs-dismiss="offcanvas">Experience</a>
-            <a href="#blog"       class="pf-mob-link" data-bs-dismiss="offcanvas">Blog</a>
+            <a href="#resources"  class="pf-mob-link" data-bs-dismiss="offcanvas">Ressources</a>
         </nav>
         <a href="#contact" class="pf-nav__cta d-block text-center mt-4" data-bs-dismiss="offcanvas">Contactez-moi</a>
         @if($about)
@@ -376,35 +376,55 @@
 </section>
 @endif
 
-{{-- BLOG --}}
-@if($blogs->isNotEmpty())
-<section id="blog" class="pf-section pf-section--alt">
+{{-- RESSOURCES --}}
+<section id="resources" class="pf-section pf-section--alt">
     <div class="container">
         <div class="text-center mb-5 reveal">
-            <span class="pf-section__label">Articles</span>
-            <h2 class="pf-section__title">Blog</h2>
+            <span class="pf-section__label">Apprentissage</span>
+            <h2 class="pf-section__title">Ressources qui m'ont aidé</h2>
+            <p class="pf-section__text mx-auto mt-2" style="max-width:620px;">
+                Sites, vidéos, documentations et formations qui ont contribué à mon évolution en développement.
+            </p>
         </div>
         <div class="row g-4">
-            @foreach($blogs as $blog)
+            @forelse($learningResources as $resource)
                 <div class="col-md-4 reveal">
-                    <article class="pf-blog-card h-100">
-                        @if($blog->image)
-                            <div class="pf-blog-card__img" style="background-image:url('{{ asset('storage/'.$blog->image) }}')"></div>
-                        @else
-                            <div class="pf-blog-card__img-placeholder">{{ mb_substr($blog->title, 0, 1) }}</div>
-                        @endif
-                        <div class="pf-blog-card__body">
-                            <div class="pf-blog-card__date small">{{ optional($blog->published_at)->format('d M Y') }}</div>
-                            <h3 class="pf-blog-card__title">{{ $blog->title }}</h3>
-                            <p class="pf-section__text small mt-2">{{ $blog->summary }}</p>
+                    <article class="pf-resource-card h-100">
+                        <div class="pf-resource-card__top">
+                            <span class="pf-resource-card__icon">
+                                @switch($resource->type)
+                                    @case('video') ▶ @break
+                                    @case('documentation') DOC @break
+                                    @case('formation') EDU @break
+                                    @case('outil') APP @break
+                                    @default WEB
+                                @endswitch
+                            </span>
+                            <span class="pf-resource-card__type">{{ ucfirst($resource->type) }}</span>
                         </div>
+                        <h3 class="pf-resource-card__title">{{ $resource->title }}</h3>
+                        @if($resource->description)
+                            <p class="pf-section__text small mt-2">{{ $resource->description }}</p>
+                        @else
+                            <p class="pf-section__text small mt-2">Une ressource utile dans mon parcours de développeur.</p>
+                        @endif
+                        <a href="{{ $resource->url }}" target="_blank" rel="noreferrer" class="pf-resource-card__link">
+                            Consulter la ressource
+                        </a>
                     </article>
                 </div>
-            @endforeach
+            @empty
+                <div class="col-12 reveal">
+                    <div class="pf-resource-empty">
+                        <span class="pf-resource-empty__icon">📚</span>
+                        <h3 class="pf-resource-empty__title">Aucune ressource ajoutée pour le moment</h3>
+                        <p class="pf-section__text mb-0">Ajoutez vos sites, vidéos ou documentations depuis l'administration.</p>
+                    </div>
+                </div>
+            @endforelse
         </div>
     </div>
 </section>
-@endif
 
 {{-- FAQ --}}
 @if($faqs->isNotEmpty())
@@ -626,7 +646,7 @@
                     <li><a href="#skills" class="pf-footer__link">Competences</a></li>
                     <li><a href="#projects" class="pf-footer__link">Projets</a></li>
                     <li><a href="#experience" class="pf-footer__link">Experience</a></li>
-                    <li><a href="#blog" class="pf-footer__link">Blog</a></li>
+                    <li><a href="#resources" class="pf-footer__link">Ressources</a></li>
                     <li><a href="#contact" class="pf-footer__link">Contact</a></li>
                 </ul>
             </div>
@@ -941,6 +961,20 @@
 .pf-blog-card__date { color:var(--pf-text); }
 .pf-blog-card__title { font-size:1rem; font-weight:700; color:var(--pf-heading); margin-top:.3rem; }
 
+/* Ressources */
+.pf-resource-card { background:var(--pf-card); border:1px solid var(--pf-border); border-radius:var(--pf-radius); padding:1.35rem; display:flex; flex-direction:column; gap:.8rem; transition:all .25s; box-shadow:0 2px 12px rgba(0,0,0,.04); }
+.pf-resource-card:hover { border-color:rgba(13,148,136,.35); transform:translateY(-3px); box-shadow:0 10px 28px rgba(0,0,0,.08); }
+.pf-resource-card__top { display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+.pf-resource-card__icon { width:42px; height:42px; border-radius:12px; background:linear-gradient(135deg,var(--pf-accent),var(--pf-primary)); color:#fff; display:flex; align-items:center; justify-content:center; font-size:.75rem; font-weight:800; letter-spacing:.04em; flex-shrink:0; }
+.pf-resource-card__type { font-size:.68rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--pf-accent); background:rgba(13,148,136,.08); border:1px solid rgba(13,148,136,.18); border-radius:999px; padding:.25rem .65rem; }
+.pf-resource-card__title { color:var(--pf-heading); font-size:1.05rem; font-weight:800; margin:0; line-height:1.35; }
+.pf-resource-card__link { margin-top:auto; color:var(--pf-accent); font-size:.82rem; font-weight:800; text-decoration:none; display:inline-flex; align-items:center; gap:.35rem; }
+.pf-resource-card__link::after { content:"↗"; font-size:.8rem; }
+.pf-resource-card__link:hover { color:var(--pf-primary); }
+.pf-resource-empty { background:var(--pf-card); border:1px dashed rgba(13,148,136,.35); border-radius:var(--pf-radius); padding:2rem; text-align:center; }
+.pf-resource-empty__icon { display:inline-flex; width:48px; height:48px; border-radius:14px; align-items:center; justify-content:center; background:rgba(13,148,136,.08); margin-bottom:1rem; }
+.pf-resource-empty__title { color:var(--pf-heading); font-size:1.05rem; font-weight:800; margin-bottom:.4rem; }
+
 /* FAQ */
 .pf-faq-item { border:1px solid var(--pf-border); border-radius:var(--pf-radius-sm); margin-bottom:.75rem; overflow:hidden; }
 .pf-faq-btn { width:100%; text-align:left; background:var(--pf-card); color:var(--pf-heading); padding:1.1rem 1.25rem; border:none; cursor:pointer; font-size:.9rem; font-weight:600; display:flex; justify-content:space-between; align-items:center; transition:background .2s; }
@@ -1054,6 +1088,7 @@
         services: @json($services->pluck('title')->filter()->values()->take(8)),
         projects: @json($projects->pluck('title')->filter()->values()->take(6)),
         technologies: @json($technologies->pluck('name')->filter()->values()->take(12)),
+        resources: @json($learningResources->pluck('title')->filter()->values()->take(8)),
     };
 
     // Reveal au scroll
@@ -1131,6 +1166,10 @@
 
         if (q.includes('projet') || q.includes('realisation') || q.includes('réalisation')) {
             return 'Voici quelques réalisations à explorer : ' + formatList(portfolioContext.projects, 'les projets seront ajoutés progressivement dans le portfolio') + '.';
+        }
+
+        if (q.includes('ressource') || q.includes('site') || q.includes('video') || q.includes('vidéo') || q.includes('formation') || q.includes('documentation')) {
+            return 'Quelques ressources qui ont aidé son apprentissage : ' + formatList(portfolioContext.resources, 'elles seront ajoutées progressivement dans la section Ressources') + '.';
         }
 
         if (q.includes('mobile') || q.includes('web') || q.includes('solution') || q.includes('application')) {

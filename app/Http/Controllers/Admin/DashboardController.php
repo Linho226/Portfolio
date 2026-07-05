@@ -7,6 +7,7 @@ use App\Models\Contact;
 use App\Models\Education;
 use App\Models\Experience;
 use App\Models\Faq;
+use App\Models\LearningResource;
 use App\Models\PageVisit;
 use App\Models\Project;
 use App\Models\Service;
@@ -27,6 +28,7 @@ class DashboardController extends Controller
             'skills'       => Schema::hasTable('skills')       ? Skill::count()       : 0,
             'services'     => Schema::hasTable('services')     ? Service::count()     : 0,
             'technologies' => Schema::hasTable('technologies') ? Technology::count()  : 0,
+            'resources'    => Schema::hasTable('learning_resources') ? LearningResource::count() : 0,
             'experiences'  => Schema::hasTable('experiences')  ? Experience::count()  : 0,
             'educations'   => Schema::hasTable('educations')   ? Education::count()   : 0,
             'testimonials' => Schema::hasTable('testimonials') ? Testimonial::count() : 0,

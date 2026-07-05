@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EducationController;
 use App\Http\Controllers\Admin\ExperienceController;
 use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\LearningResourceController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\ServiceController;
@@ -58,6 +59,9 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 
     // Technologies
     Route::resource('technologies', TechnologyController::class)->except('show');
+
+    // Ressources utiles : sites, videos, documentations, formations
+    Route::resource('learning-resources', LearningResourceController::class)->except('show');
 
     // Temoignages
     Route::resource('testimonials', TestimonialController::class)->except('show');

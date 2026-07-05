@@ -86,6 +86,7 @@
             ['label' => 'Compétences',   'count' => $counts['skills'],       'icon' => '🎯', 'route' => 'admin.competences.index',  'color' => '#8b5cf6'],
             ['label' => 'Services',      'count' => $counts['services'],     'icon' => '🛠️', 'route' => 'admin.services.index',     'color' => '#06b6d4'],
             ['label' => 'Technologies',  'count' => $counts['technologies'], 'icon' => '💡', 'route' => 'admin.technologies.index', 'color' => '#f59e0b'],
+            ['label' => 'Ressources',    'count' => $counts['resources'],    'icon' => '📚', 'route' => 'admin.learning-resources.index', 'color' => '#0d9488'],
             ['label' => 'Expériences',   'count' => $counts['experiences'],  'icon' => '📅', 'route' => 'admin.experiences.index',  'color' => '#10b981'],
             ['label' => 'Formations',    'count' => $counts['educations'],   'icon' => '🎓', 'route' => 'admin.educations.index',   'color' => '#14b8a6'],
             ['label' => 'Témoignages',   'count' => $counts['testimonials'], 'icon' => '⭐', 'route' => 'admin.testimonials.index', 'color' => '#f43f5e'],
@@ -148,6 +149,7 @@
                     <div class="col-6"><a href="{{ route('admin.competences.create') }}" class="btn btn-outline-primary btn-sm w-100">+ Compétence</a></div>
                     <div class="col-6"><a href="{{ route('admin.services.create') }}" class="btn btn-outline-primary btn-sm w-100">+ Service</a></div>
                     <div class="col-6"><a href="{{ route('admin.technologies.create') }}" class="btn btn-outline-primary btn-sm w-100">+ Technologie</a></div>
+                    <div class="col-6"><a href="{{ route('admin.learning-resources.create') }}" class="btn btn-outline-primary btn-sm w-100">+ Ressource</a></div>
                     <div class="col-6"><a href="{{ route('admin.experiences.create') }}" class="btn btn-outline-primary btn-sm w-100">+ Expérience</a></div>
                     <div class="col-6"><a href="{{ route('admin.educations.create') }}" class="btn btn-outline-primary btn-sm w-100">+ Formation</a></div>
                     <div class="col-6"><a href="{{ route('admin.testimonials.create') }}" class="btn btn-outline-primary btn-sm w-100">+ Témoignage</a></div>
@@ -246,17 +248,18 @@
     new Chart(document.getElementById('contentChart'), {
         type: 'doughnut',
         data: {
-            labels: ['Projets', 'Compétences', 'Services', 'Technologies', 'Expériences', 'Formations'],
+            labels: ['Projets', 'Compétences', 'Services', 'Technologies', 'Ressources', 'Expériences', 'Formations'],
             datasets: [{
                 data: [
                     {{ $counts['projects'] }},
                     {{ $counts['skills'] }},
                     {{ $counts['services'] }},
                     {{ $counts['technologies'] }},
+                    {{ $counts['resources'] }},
                     {{ $counts['experiences'] }},
                     {{ $counts['educations'] }}
                 ],
-                backgroundColor: ['#3b82f6','#8b5cf6','#06b6d4','#f59e0b','#10b981','#14b8a6'],
+                backgroundColor: ['#3b82f6','#8b5cf6','#06b6d4','#f59e0b','#0d9488','#10b981','#14b8a6'],
                 borderWidth: 0,
                 hoverOffset: 6,
             }]
@@ -285,5 +288,4 @@
 </script>
 @endpush
 </x-app-layout>
-
 

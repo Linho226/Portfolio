@@ -7,6 +7,7 @@ use App\Models\Blog;
 use App\Models\Education;
 use App\Models\Experience;
 use App\Models\Faq;
+use App\Models\LearningResource;
 use App\Models\Project;
 use App\Models\Service;
 use App\Models\Setting;
@@ -81,6 +82,14 @@ class HomeController extends Controller
             ->get()
             : $this->emptyCollection();
 
+        $learningResources = Schema::hasTable('learning_resources')
+            ? LearningResource::query()
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->orderBy('title')
+            ->get()
+            : $this->emptyCollection();
+
         $faqs = Schema::hasTable('faqs')
             ? Faq::query()
             ->where('is_active', true)
@@ -101,6 +110,7 @@ class HomeController extends Controller
             'technologies',
             'testimonials',
             'blogs',
+            'learningResources',
             'faqs',
         ));
     }
