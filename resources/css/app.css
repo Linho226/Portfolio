@@ -486,6 +486,17 @@ body {
 	transform: translateY(0);
 	opacity: .9;
 }
+.auth-secondary-action {
+	display: block;
+	color: #0d9488;
+	font-size: .85rem;
+	font-weight: 700;
+	text-align: center;
+	text-decoration: none;
+}
+.auth-secondary-action:hover {
+	text-decoration: underline;
+}
 
 @media (prefers-color-scheme: dark) {
 	.auth-shell {

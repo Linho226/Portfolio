@@ -685,6 +685,44 @@
     </div>
 </footer>
 
+{{-- CHATBOT IA - squelette prêt à brancher sur une API --}}
+<section class="pf-chatbot" id="pf-chatbot" aria-live="polite">
+    <button class="pf-chatbot__toggle" id="pf-chatbot-toggle" type="button" aria-label="Ouvrir l'assistant IA">
+        <span class="pf-chatbot__pulse"></span>
+        <span class="pf-chatbot__icon">IA</span>
+    </button>
+
+    <div class="pf-chatbot__panel" id="pf-chatbot-panel" aria-hidden="true">
+        <div class="pf-chatbot__header">
+            <div class="d-flex align-items-center gap-2">
+                <span class="pf-chatbot__avatar">IA</span>
+                <div>
+                    <div class="pf-chatbot__title">Assistant portfolio</div>
+                    <div class="pf-chatbot__status">Disponible pour vous renseigner</div>
+                </div>
+            </div>
+            <button class="pf-chatbot__close" id="pf-chatbot-close" type="button" aria-label="Fermer l'assistant">×</button>
+        </div>
+
+        <div class="pf-chatbot__messages" id="pf-chatbot-messages">
+            <div class="pf-chatbot__message pf-chatbot__message--bot">
+                Bonjour ! Je peux vous parler de {{ $about->name ?? 'ce portfolio' }}, de ses compétences, de ses projets et des solutions web/mobile qu'il peut réaliser.
+            </div>
+        </div>
+
+        <div class="pf-chatbot__suggestions" id="pf-chatbot-suggestions">
+            <button type="button" data-question="Que peux-tu me dire sur ce profil ?">Profil</button>
+            <button type="button" data-question="Quelles solutions peut-il développer ?">Solutions</button>
+            <button type="button" data-question="Quelles sont ses compétences ?">Compétences</button>
+        </div>
+
+        <form class="pf-chatbot__form" id="pf-chatbot-form">
+            <input id="pf-chatbot-input" type="text" autocomplete="off" placeholder="Posez une question..." aria-label="Votre question">
+            <button type="submit">Envoyer</button>
+        </form>
+    </div>
+</section>
+
 <style>
 /* ══════════════════════════════════════════════════════════
    MODE CLAIR — dégradé bleu-ciel / indigo doux
@@ -963,6 +1001,41 @@
 .pf-footer__totop { display:inline-flex; align-items:center; gap:.4rem; font-size:.75rem; font-weight:600; color:#475569; text-decoration:none; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); border-radius:999px; padding:.35rem .9rem; transition:all .2s; }
 .pf-footer__totop:hover { color:var(--pf-accent); border-color:rgba(13,148,136,.3); background:rgba(13,148,136,.06); }
 
+/* Chatbot IA */
+.pf-chatbot { position:fixed; right:1.25rem; bottom:1.25rem; z-index:1100; font-family:inherit; }
+.pf-chatbot__toggle { position:relative; width:58px; height:58px; border:0; border-radius:18px; background:linear-gradient(135deg,var(--pf-accent),var(--pf-accent2)); color:#fff; box-shadow:0 18px 45px rgba(13,148,136,.28); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:transform .2s, box-shadow .2s; }
+.pf-chatbot__toggle:hover { transform:translateY(-2px); box-shadow:0 22px 55px rgba(79,70,229,.3); }
+.pf-chatbot__icon { position:relative; z-index:1; font-weight:900; font-size:.85rem; letter-spacing:.08em; }
+.pf-chatbot__pulse { position:absolute; inset:-5px; border-radius:22px; border:1px solid rgba(13,148,136,.35); animation:chatPulse 1.8s infinite; }
+.pf-chatbot__panel { position:absolute; right:0; bottom:74px; width:min(360px, calc(100vw - 2.5rem)); max-height:min(640px, calc(100vh - 7rem)); display:flex; flex-direction:column; overflow:hidden; background:var(--pf-glass); border:1px solid var(--pf-border); border-radius:18px; box-shadow:0 24px 70px rgba(15,23,42,.18); -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px); opacity:0; transform:translateY(14px) scale(.98); pointer-events:none; transition:opacity .22s, transform .22s; }
+.pf-chatbot.is-open .pf-chatbot__panel { opacity:1; transform:none; pointer-events:auto; }
+.pf-chatbot__header { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:1rem; border-bottom:1px solid var(--pf-border); background:rgba(255,255,255,.36); }
+.pf-chatbot__avatar { width:38px; height:38px; border-radius:12px; display:inline-flex; align-items:center; justify-content:center; color:#fff; font-size:.76rem; font-weight:900; letter-spacing:.08em; background:linear-gradient(135deg,var(--pf-accent),var(--pf-accent2)); flex-shrink:0; }
+.pf-chatbot__title { color:var(--pf-heading); font-size:.9rem; font-weight:800; }
+.pf-chatbot__status { color:var(--pf-text); font-size:.72rem; margin-top:.1rem; }
+.pf-chatbot__close { width:32px; height:32px; border:1px solid var(--pf-border); border-radius:10px; background:var(--pf-hover-bg); color:var(--pf-text); font-size:1.3rem; line-height:1; cursor:pointer; }
+.pf-chatbot__messages { display:flex; flex-direction:column; gap:.7rem; padding:1rem; overflow-y:auto; min-height:230px; max-height:350px; scrollbar-width:thin; }
+.pf-chatbot__message { max-width:88%; padding:.72rem .85rem; border-radius:14px; font-size:.84rem; line-height:1.6; white-space:pre-line; }
+.pf-chatbot__message--bot { align-self:flex-start; background:var(--pf-hover-bg); color:var(--pf-text); border:1px solid var(--pf-border); border-bottom-left-radius:4px; }
+.pf-chatbot__message--user { align-self:flex-end; background:linear-gradient(135deg,var(--pf-accent),var(--pf-accent2)); color:#fff; border-bottom-right-radius:4px; }
+.pf-chatbot__suggestions { display:flex; gap:.5rem; padding:0 1rem 1rem; overflow-x:auto; }
+.pf-chatbot__suggestions button { border:1px solid rgba(13,148,136,.28); background:rgba(13,148,136,.08); color:var(--pf-accent); border-radius:999px; padding:.38rem .75rem; font-size:.72rem; font-weight:800; white-space:nowrap; cursor:pointer; }
+.pf-chatbot__form { display:flex; gap:.55rem; padding:1rem; border-top:1px solid var(--pf-border); background:rgba(255,255,255,.28); }
+.pf-chatbot__form input { flex:1; min-width:0; border:1.5px solid var(--pf-border); background:var(--pf-hover-bg); color:var(--pf-heading); border-radius:12px; padding:.72rem .85rem; font-size:.84rem; outline:none; }
+.pf-chatbot__form input:focus { border-color:var(--pf-accent); box-shadow:0 0 0 3px rgba(13,148,136,.12); }
+.pf-chatbot__form button { border:0; border-radius:12px; padding:.72rem .9rem; background:var(--pf-accent); color:#fff; font-size:.78rem; font-weight:800; cursor:pointer; }
+@keyframes chatPulse { 0%{opacity:.75;transform:scale(.95)} 70%,100%{opacity:0;transform:scale(1.2)} }
+
+@media (max-width: 575.98px) {
+    .pf-chatbot { right:1rem; bottom:1rem; }
+    .pf-chatbot__panel { right:-.25rem; bottom:70px; width:calc(100vw - 1.5rem); }
+    .pf-chatbot__toggle { width:54px; height:54px; border-radius:16px; }
+}
+
+@media (prefers-color-scheme: dark) {
+    .pf-chatbot__header, .pf-chatbot__form { background:rgba(15,23,42,.55); }
+}
+
 /* Animations reveal */
 .reveal { opacity:0; transform:translateY(28px); transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1); }
 .reveal--delay { transition-delay:.18s; }
@@ -971,6 +1044,18 @@
 
 <script>
 (function () {
+    var portfolioContext = {
+        name: @json($about->name ?? $setting->site_name ?? 'ce développeur'),
+        profession: @json($about->profession ?? 'développeur full stack'),
+        description: @json($about->short_description ?? $about->description ?? 'Il conçoit des solutions web et mobiles adaptées aux besoins des utilisateurs.'),
+        location: @json($about->location ?? null),
+        available: @json((bool) ($about->is_available ?? false)),
+        skills: @json($skills->flatten()->pluck('name')->filter()->values()->take(12)),
+        services: @json($services->pluck('title')->filter()->values()->take(8)),
+        projects: @json($projects->pluck('title')->filter()->values()->take(6)),
+        technologies: @json($technologies->pluck('name')->filter()->values()->take(12)),
+    };
+
     // Reveal au scroll
     var io = new IntersectionObserver(function(entries) {
         entries.forEach(function(e) {
@@ -1008,6 +1093,83 @@
             }
         });
     }, { passive: true });
+
+    // Chatbot IA : squelette local, pret a remplacer par un appel API.
+    var chatbot = document.getElementById('pf-chatbot');
+    var chatToggle = document.getElementById('pf-chatbot-toggle');
+    var chatClose = document.getElementById('pf-chatbot-close');
+    var chatPanel = document.getElementById('pf-chatbot-panel');
+    var chatForm = document.getElementById('pf-chatbot-form');
+    var chatInput = document.getElementById('pf-chatbot-input');
+    var chatMessages = document.getElementById('pf-chatbot-messages');
+    var chatSuggestions = document.getElementById('pf-chatbot-suggestions');
+
+    function setChatOpen(open) {
+        chatbot.classList.toggle('is-open', open);
+        chatPanel.setAttribute('aria-hidden', open ? 'false' : 'true');
+        if (open) { setTimeout(function() { chatInput.focus(); }, 120); }
+    }
+
+    function appendMessage(text, type) {
+        var message = document.createElement('div');
+        message.className = 'pf-chatbot__message pf-chatbot__message--' + type;
+        message.textContent = text;
+        chatMessages.appendChild(message);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function formatList(items, fallback) {
+        return items && items.length ? items.join(', ') : fallback;
+    }
+
+    function localPortfolioReply(question) {
+        var q = question.toLowerCase();
+
+        if (q.includes('competence') || q.includes('compétence') || q.includes('technologie') || q.includes('stack')) {
+            return portfolioContext.name + ' travaille notamment avec : ' + formatList(portfolioContext.skills.concat(portfolioContext.technologies).slice(0, 12), 'des technologies web et mobiles modernes') + '.';
+        }
+
+        if (q.includes('projet') || q.includes('realisation') || q.includes('réalisation')) {
+            return 'Voici quelques réalisations à explorer : ' + formatList(portfolioContext.projects, 'les projets seront ajoutés progressivement dans le portfolio') + '.';
+        }
+
+        if (q.includes('mobile') || q.includes('web') || q.includes('solution') || q.includes('application')) {
+            return portfolioContext.name + ' peut aider à concevoir des applications web, des interfaces d’administration, des portfolios, des sites vitrines, des APIs et des solutions mobiles selon les besoins du projet.';
+        }
+
+        if (q.includes('contact') || q.includes('mission') || q.includes('disponible')) {
+            return portfolioContext.available
+                ? portfolioContext.name + ' est disponible pour discuter d’une mission. Vous pouvez utiliser le formulaire de contact plus bas sur la page.'
+                : 'Vous pouvez quand même envoyer un message via le formulaire de contact pour présenter votre besoin.';
+        }
+
+        return portfolioContext.name + ' est ' + portfolioContext.profession + '. ' + portfolioContext.description + ' Je peux aussi répondre à des questions sur ses compétences, ses projets ou les solutions informatiques qu’il peut développer.';
+    }
+
+    function handleQuestion(question) {
+        if (!question.trim()) { return; }
+        appendMessage(question, 'user');
+        chatInput.value = '';
+
+        setTimeout(function() {
+            // Plus tard : remplacer cette ligne par fetch('/api/chatbot', ...)
+            appendMessage(localPortfolioReply(question), 'bot');
+        }, 350);
+    }
+
+    if (chatbot && chatToggle && chatForm) {
+        chatToggle.addEventListener('click', function() { setChatOpen(!chatbot.classList.contains('is-open')); });
+        chatClose.addEventListener('click', function() { setChatOpen(false); });
+        chatForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleQuestion(chatInput.value);
+        });
+        chatSuggestions.addEventListener('click', function(e) {
+            if (e.target.matches('button[data-question]')) {
+                handleQuestion(e.target.dataset.question);
+            }
+        });
+    }
 })();
 </script>
 

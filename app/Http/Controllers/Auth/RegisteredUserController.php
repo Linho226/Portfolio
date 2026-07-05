@@ -18,8 +18,14 @@ class RegisteredUserController extends Controller
     /**
      * Display the registration view.
      */
-    public function create(): View
+    public function create(): View|RedirectResponse
     {
+        if (User::query()->exists()) {
+            return redirect()
+                ->route('login')
+                ->with('status', 'Le compte administrateur existe déjà. Connectez-vous pour gérer le portfolio.');
+        }
+
         return view('auth.register');
     }
 
@@ -30,6 +36,12 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        if (User::query()->exists()) {
+            return redirect()
+                ->route('login')
+                ->with('status', 'La création de compte est fermée : un administrateur existe déjà.');
+        }
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],

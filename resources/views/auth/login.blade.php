@@ -43,6 +43,10 @@
             </div>
 
             <button type="submit" class="auth-submit">Se connecter</button>
+
+            @if (! \App\Models\User::query()->exists())
+                <a href="{{ route('register') }}" class="auth-secondary-action">Créer le compte administrateur</a>
+            @endif
         </form>
     </div>
 </x-guest-layout>
