@@ -10,13 +10,13 @@
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-54N29KS2');</script>
+    })(window,document,'script','dataLayer','GTM-TQS7H7GS');</script>
     <!-- End Google Tag Manager -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="pf-body">
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-54N29KS2"
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TQS7H7GS"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
