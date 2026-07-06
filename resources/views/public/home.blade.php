@@ -12,6 +12,7 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-TQS7H7GS');</script>
     <!-- End Google Tag Manager -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="pf-body">
@@ -169,7 +170,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="d-flex flex-column gap-3">
                         @forelse($services->take(4) as $service)
                             <div class="pf-service-mini">
-                                <div class="pf-service-mini__icon">{{ mb_substr($service->title, 0, 1) }}</div>
+                                @php
+                                    $serviceIcon = trim($service->icon ?: mb_substr($service->title, 0, 1));
+                                    $serviceIconIsClass = Str::startsWith($serviceIcon, ['fa ', 'fas ', 'far ', 'fab ', 'fa-solid ', 'fa-regular ', 'fa-brands ']);
+                                @endphp
+                                <div class="pf-service-mini__icon">
+                                    @if($serviceIconIsClass)
+                                        <i class="{{ $serviceIcon }}"></i>
+                                    @else
+                                        {{ $serviceIcon }}
+                                    @endif
+                                </div>
                                 <div>
                                     <div class="fw-semibold small" style="color:var(--pf-heading);">{{ $service->title }}</div>
                                     <div class="pf-section__text small mt-1">{{ Str::limit($service->description, 80) }}</div>
@@ -231,7 +242,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             @forelse($services as $service)
                 <div class="col-md-6 col-lg-4 reveal">
                     <div class="pf-service-card h-100">
-                        <div class="pf-service-card__icon">{{ $service->icon ?? '⚡' }}</div>
+                        @php
+                            $serviceIcon = trim($service->icon ?: '⚡');
+                            $serviceIconIsClass = Str::startsWith($serviceIcon, ['fa ', 'fas ', 'far ', 'fab ', 'fa-solid ', 'fa-regular ', 'fa-brands ']);
+                        @endphp
+                        @if($service->image)
+                            <img src="{{ asset('storage/'.$service->image) }}" alt="{{ $service->title }}" class="pf-service-card__image">
+                        @else
+                            <div class="pf-service-card__icon">
+                                @if($serviceIconIsClass)
+                                    <i class="{{ $serviceIcon }}"></i>
+                                @else
+                                    {{ $serviceIcon }}
+                                @endif
+                            </div>
+                        @endif
                         <h3 class="pf-service-card__title">{{ $service->title }}</h3>
                         <p class="pf-section__text small mt-2">{{ $service->description }}</p>
                     </div>
@@ -925,9 +950,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 .pf-info-item { color:var(--pf-text); font-size:.9rem; }
 
 /* Services */
-.pf-service-card { background:var(--pf-card); border:1px solid var(--pf-border); border-radius:var(--pf-radius); padding:2rem; text-align:center; transition:all .25s; box-shadow:0 2px 12px rgba(0,0,0,.04); }
+.pf-service-card { background:var(--pf-card); border:1px solid var(--pf-border); border-radius:var(--pf-radius); padding:2rem; text-align:center; transition:all .25s; box-shadow:0 2px 12px rgba(0,0,0,.04); display:flex; flex-direction:column; align-items:center; }
 .pf-service-card:hover { border-color:rgba(79,70,229,.35); transform:translateY(-4px); box-shadow:0 16px 40px rgba(0,0,0,.1); }
-.pf-service-card__icon { font-size:2rem; margin-bottom:.75rem; }
+.pf-service-card__icon { width:58px; height:58px; border-radius:16px; background:linear-gradient(135deg,rgba(13,148,136,.14),rgba(79,70,229,.14)); color:var(--pf-accent); display:flex; align-items:center; justify-content:center; font-size:1.8rem; margin-bottom:1rem; }
+.pf-service-card__image { width:100%; aspect-ratio:16/10; object-fit:cover; border-radius:14px; border:1px solid var(--pf-border); margin-bottom:1.1rem; }
 
 .pf-service-card__title { font-size:1.05rem; font-weight:700; color:var(--pf-heading); }
 

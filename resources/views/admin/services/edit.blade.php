@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header"><h2 class="section-title mb-0">Modifier le service</h2></x-slot>
     @include('admin._partials.alert')
-    <form method="POST" action="{{ route('admin.services.update', $service) }}">
+    <form method="POST" action="{{ route('admin.services.update', $service) }}" enctype="multipart/form-data">
         @csrf @method('PUT')
     <div class="admin-card p-4">
         <div class="row g-3">
@@ -13,6 +13,22 @@
             <div class="col-md-4">
                 <label class="form-label fw-semibold">Icone <small class="text-muted">(emoji ou classe)</small></label>
                 <input type="text" name="icon" value="{{ old('icon', $service->icon ?? '') }}" class="form-control" placeholder="⚡ ou fas fa-code">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Image <small class="text-muted">(facultatif)</small></label>
+                <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" accept="image/*">
+                <div class="form-text">Choisir une nouvelle image remplacera l'image actuelle.</div>
+                @error('image')<div class="invalid-feedback">{{ $message }}</div>@enderror
+
+                @if($service->image)
+                    <div class="mt-3 d-flex align-items-center gap-3">
+                        <img src="{{ asset('storage/'.$service->image) }}" alt="{{ $service->title }}" style="width:88px;height:64px;object-fit:cover;border-radius:10px;border:1px solid var(--adm-divider);">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="remove_image" id="remove_image" value="1">
+                            <label class="form-check-label" for="remove_image">Supprimer l'image actuelle</label>
+                        </div>
+                    </div>
+                @endif
             </div>
             <div class="col-12">
                 <label class="form-label fw-semibold">Description</label>

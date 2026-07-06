@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header"><h2 class="section-title mb-0">Nouveau service</h2></x-slot>
-    <form method="POST" action="{{ route('admin.services.store') }}">
+    <form method="POST" action="{{ route('admin.services.store') }}" enctype="multipart/form-data">
         @csrf
     <div class="admin-card p-4">
         <div class="row g-3">
@@ -12,6 +12,12 @@
             <div class="col-md-4">
                 <label class="form-label fw-semibold">Icone <small class="text-muted">(emoji ou classe)</small></label>
                 <input type="text" name="icon" value="{{ old('icon', $service->icon ?? '') }}" class="form-control" placeholder="⚡ ou fas fa-code">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Image <small class="text-muted">(facultatif)</small></label>
+                <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" accept="image/*">
+                <div class="form-text">Utilisez une illustration si vous voulez enrichir la carte du service.</div>
+                @error('image')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-12">
                 <label class="form-label fw-semibold">Description</label>

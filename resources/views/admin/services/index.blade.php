@@ -8,11 +8,18 @@
     @include('admin._partials.alert')
     <div class="admin-card p-0 overflow-hidden">
         <table class="table table-hover mb-0">
-            <thead class="table-light"><tr><th>Titre</th><th>Icone</th><th>Ordre</th><th>Statut</th><th></th></tr></thead>
+            <thead class="table-light"><tr><th>Service</th><th>Visuel</th><th>Icone</th><th>Ordre</th><th>Statut</th><th></th></tr></thead>
             <tbody>
                 @forelse($services as $s)
                 <tr>
                     <td class="fw-semibold align-middle">{{ $s->title }}</td>
+                    <td class="align-middle">
+                        @if($s->image)
+                            <img src="{{ asset('storage/'.$s->image) }}" alt="{{ $s->title }}" style="width:54px;height:38px;object-fit:cover;border-radius:8px;border:1px solid var(--adm-divider);">
+                        @else
+                            <span class="text-muted small">Aucune</span>
+                        @endif
+                    </td>
                     <td class="align-middle">{{ $s->icon }}</td>
                     <td class="align-middle">{{ $s->sort_order }}</td>
                     <td class="align-middle"><span class="badge {{ $s->is_active ? 'bg-success' : 'bg-secondary' }}">{{ $s->is_active ? 'Actif' : 'Inactif' }}</span></td>
@@ -25,7 +32,7 @@
                     </td>
                 </tr>
                 @empty
-                <tr><td colspan="5" class="text-center text-muted py-4">Aucun service. <a href="{{ route('admin.services.create') }}">Ajouter</a></td></tr>
+                <tr><td colspan="6" class="text-center text-muted py-4">Aucun service. <a href="{{ route('admin.services.create') }}">Ajouter</a></td></tr>
                 @endforelse
             </tbody>
         </table>
